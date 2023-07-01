@@ -1,6 +1,7 @@
 import requests
 import time
 import constants
+from datetime import datetime
 
 
 class API:
@@ -34,7 +35,7 @@ class API:
         r = self._get(method, params)
         first_name = r['response'][0]['first_name']
         last_name = r['response'][0]['last_name']
-        age = 2023 - int(r['response'][0]['bdate'][-4:])
+        age = datetime.now().year - int(r['response'][0]['bdate'][-4:])
         gender = r['response'][0]['sex']
         city = r['response'][0]['city']['title']
         member_info = [first_name, last_name, age, gender, city]
@@ -49,6 +50,7 @@ class API:
                     }
         r = self._get(method, params)
         photos = {}
+        url = None
         for item in r['response']['items']:
             likes = item['likes']['count']
             for photo in item['sizes']:
@@ -67,5 +69,7 @@ class API:
             
 if __name__ == '__main__':
     api = API()
-    api.get_photos('1')
+    # api.get_photos('1')
+    api.get_member_info('1')
+    
     
