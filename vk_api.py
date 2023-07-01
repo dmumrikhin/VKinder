@@ -41,17 +41,16 @@ class API:
         return member_info
     
     def get_photos(self, member_id):
+        # по vk id выдает список с 3 фото размера Х с макс.кол-вом лайков
         method = 'photos.get'
         params = {'owner_id': member_id,
                     'album_id': 'profile',
                     'extended': 1
                     }
         r = self._get(method, params)
-        # return r
         photos = {}
         for item in r['response']['items']:
             likes = item['likes']['count']
-            # print(id)
             for photo in item['sizes']:
                 if photo['type'] == 'x':
                     url = photo['url']
@@ -64,16 +63,9 @@ class API:
             if count < 3:
                 photo_urls.append(photo)
                 count += 1
-        print(photo_urls)
+        return photo_urls
             
-       
-
-        
-
-
-
 if __name__ == '__main__':
     api = API()
-    # api.send_message('788770602', 'Message #1!')
-    print(api.get_photos('788770602'))
-    # print(api.get_member_info('1'))
+    api.get_photos('1')
+    
