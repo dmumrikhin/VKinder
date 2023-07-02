@@ -37,7 +37,10 @@ class API:
         last_name = r['response'][0]['last_name']
         age = datetime.now().year - int(r['response'][0]['bdate'][-4:])
         gender = r['response'][0]['sex']
-        city = r['response'][0]['city']['title']
+        if 'city' in r['response'][0]: #['city']['title']:
+            city = r['response'][0]['city']['title']
+        else:
+            city = 'Город не указан'
         member_info = [first_name, last_name, age, gender, city]
         return member_info
     
@@ -70,6 +73,6 @@ class API:
 if __name__ == '__main__':
     api = API()
     # api.get_photos('1')
-    api.get_member_info('1')
+    print(api.get_member_info('788770602'))
     
     

@@ -8,16 +8,15 @@ from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
 
 
-class Base(DeclarativeBase):
-    pass
+Base = DeclarativeBase()
 
-
-class User(Base):
+class Users(Base):
     __tablename__ = "users"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
-    vk_id: Mapped[str] = mapped_column(String(30), unique=True)
-
+    user_id: Mapped[int] = mapped_column(primary_key=True)
+    contact_id: Mapped[int] = mapped_column(unique=True)
+    like: Mapped[bool] = mapped_column(Boolean())
+    
     viewed_users: Mapped[List["ViewedUser"]] = relationship(
         back_populates="user", cascade="all, delete-orphan"
     )
